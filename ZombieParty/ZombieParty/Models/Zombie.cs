@@ -8,29 +8,38 @@ namespace ZombieParty.Models
     {
         public int Id { get; set; }
 
-        [StringLength(20, MinimumLength = 5)]
+        [Display(Name = "Name")]
+        [StringLength(20, MinimumLength = 5, ErrorMessage = "StringLengthValidation")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ValidationRequired")]
         public string Name { get; set; }
 
-        [StringLength(255)]
+        [Display(Name = "ShortDesc")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ValidationRequired")]
+        [StringLength(255, ErrorMessage = "StringLengthValidation")]
         public string ShortDesc { get; set; }
 
-        [Range(1, 20, ErrorMessage = "{0} requires a value between {1} and {2}.")]
+        [Display(Name = "Point")]
+        [Range(1, 20, ErrorMessage = "RangeValidation")]
         public int Point { get; set; }
 
+        [Display(Name = "Force")]
+        [Range(0, int.MaxValue, ErrorMessage = "RangeValidation")]
         public int Force { get; set; }
 
+        [Display(Name = "Image")]
         [ValidateNever]
         public string Image { get; set; }
 
         // FACULTATIF on peut formellement identifier le champ lien
         // sinon le champ de foreignKey sera auto généré dans la BD
-        [Display(Name = "Zombie Type")]
+        [Display(Name = "ZombieType")]
         [ForeignKey("ZombieType")]
         public int ZombieTypeId { get; set; }
         [ValidateNever] 
         public virtual ZombieType? ZombieType { get; set; }
 
-        [ValidateNever] 
+        [ValidateNever]
+        [Display(Name = "HuntingLogs")]
         public virtual List<HuntingLog> HuntingLogs { get; set; }
     }
 }
